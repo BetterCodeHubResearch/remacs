@@ -599,7 +599,12 @@ pub struct Lisp_Cons {
     /// Car of this cons cell.
     pub car: Lisp_Object,
     /// Cdr of this cons cell, or the chain used for the free list.
+    pub u: Lisp_Cons_Cdr,
+}
+
+pub union Lisp_Cons_Cdr {
     pub cdr: Lisp_Object,
+    pub chain: *mut Lisp_Cons
 }
 
 /// Type of comparison for `internal_equal()`.
