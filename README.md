@@ -471,15 +471,15 @@ unsafe fn XCAR(object: LispObject) -> LispObject {
 // of XCAR: it only passes valid cons cells. We just use
 // unsafe blocks instead.
 fn car(object: LispObject) -> LispObject {
-    if CONSP(object) {
+    if object.is_cons() {
         unsafe {
             XCAR(object)
         }
-    } else if NILP(object) {
-        Qnil
+    } else if object.is_nil() {
+        LispObject::constant_nil()
     } else {
         unsafe {
-            wrong_type_argument(Qlistp, object)
+            wrong_type!(Qlistp, object)
         }
     }
 }
